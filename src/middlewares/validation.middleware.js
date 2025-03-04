@@ -5,6 +5,13 @@ const validateRequest = async (req, res, next) => {
     body("name").notEmpty().withMessage("Name is required"),
     body("price").isFloat({gt:0}).withMessage("price be positive"), // gt :0 means greater than 0
     // body('imageUrl').isURL().withMessage("invalid Url"),
+
+  body('imageUrl').custom((value,{req})=>{
+    if(!req.file){
+      throw new Error("File empty")
+    }
+    return true;
+  })
   ];
 
   await Promise.all(rules.map((rule)=>{rule.run(req)}));
