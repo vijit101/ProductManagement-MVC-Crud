@@ -16,10 +16,19 @@ export default class ProductController{
     }
 
     addNewProduct(req,res){
-        ProductModel.append(req.body); // req . body gets the prod data in obj form 
+        const{name,desc,price} = req.body;
+        const imageUrl = "images/"+req.file.filename; // .file property is added by multer middleware
+        ProductModel.appendwithUpload(name,desc,price,imageUrl);
+        //ProductModel.append(req.body); // req . body gets the prod data in obj form this is working
         let prod = ProductModel.get();
         return res.render("products",{prods:prod}); // make sure the key is prods as its used in product ejs better to use an enum and save it as prods 
     }
+
+    // addNewProduct(req,res,next){ // old implementation when asking the user for an image url intead of upload
+    //     ProductModel.append(req.body); // req . body gets the prod data in obj form 
+    //     let prod = ProductModel.get();
+    //     return res.render("products",{prods:prod}); // make sure the key is prods as its used in product ejs better to use an enum and save it as prods 
+    // }
 
     getUpdateProductView(req,res,next){
         // if prod exist return view

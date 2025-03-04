@@ -12,10 +12,12 @@ export default class ProductModel {
     // returns array of prodmodel data
   }
 
-  static append(name,desc,price,imgurl){
+  // will use this append for file upload as now imgurl is not a url but a file and we would not get data as we were
+  static appendwithUpload(name,desc,price,imgurl){
     let newProd = new ProductModel(products.length+1,name,desc,price,imgurl);
     products.push(newProd);
   }
+  
 
   static append(productobj){
     productobj.id = products.length+1;

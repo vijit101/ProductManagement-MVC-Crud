@@ -9,7 +9,7 @@
   <% } %>
 
   
-<form action="/update-product" method="post"> 
+<form action="/update-product" method="post" enctype="multipart/form-data"> 
     <!-- submit at the default path  -->
     <input type="hidden" class="form-control" id="id" name="id" value="<%= product.id %>">
 

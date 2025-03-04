@@ -3,6 +3,7 @@ import ProductController from './src/controllers/product.controller.js';
 import path from 'path';
 import ejsLayouts from "express-ejs-layouts";
 import validationMiddleware from './src/middlewares/validation.middleware.js';
+import { uploadfile } from './src/middlewares/fileUpload.middleware.js';
 
 const server = express();
 // for body parsing as post req are mostly text not readable format 
@@ -22,10 +23,11 @@ server.set("views",path.join(path.resolve(),"src","views"));
 server.use(ejsLayouts);
 
 server.use(express.static('src/views'));
+server.use(express.static("./public"));
 
 server.get("/",productController.getproducts);
 server.get("/new",productController.getAddForm);
-server.post("/",[validationMiddleware],productController.addNewProduct);
+server.post("/",[uploadfile.single("imageUrl"),validationMiddleware],productController.addNewProduct);
 
 server.get("/update-product/:id",productController.getUpdateProductView);
 server.post("/update-product",productController.postUpdateProduct);
